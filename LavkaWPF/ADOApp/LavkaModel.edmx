@@ -1,0 +1,560 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище Lavka320Model" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Item">
+          <Key>
+            <PropertyRef Name="Item_ID" />
+          </Key>
+          <Property Name="Item_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Item_Description" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Product_ID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Item_Store">
+          <Key>
+            <PropertyRef Name="Item_Store_ID" />
+          </Key>
+          <Property Name="Item_Store_ID" Type="int" Nullable="false" />
+          <Property Name="Item_ID" Type="int" Nullable="false" />
+          <Property Name="Store_ID" Type="int" Nullable="false" />
+          <Property Name="Count" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Login">
+          <Key>
+            <PropertyRef Name="Login_ID" />
+          </Key>
+          <Property Name="Login_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Login" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Password" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="User_ID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="Product_ID" />
+          </Key>
+          <Property Name="Product_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Product_Name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Product_PhotoPath" Type="text" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Store">
+          <Key>
+            <PropertyRef Name="Store_ID" />
+          </Key>
+          <Property Name="Store_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Store_Name" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Store_Warehouse">
+          <Key>
+            <PropertyRef Name="Store_Warehouse_ID" />
+          </Key>
+          <Property Name="Store_Warehouse_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Store_ID" Type="int" Nullable="false" />
+          <Property Name="Warehouse_ID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="Type">
+          <Key>
+            <PropertyRef Name="Type_ID" />
+          </Key>
+          <Property Name="Type_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Type_Name" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="User_ID" />
+          </Key>
+          <Property Name="User_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="User_Name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Type_ID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Warehouse">
+          <Key>
+            <PropertyRef Name="Warehouse_ID" />
+          </Key>
+          <Property Name="Warehouse_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Warehouse_Address" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Warehouse_Name" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Item_Product">
+          <End Role="Product" Type="Self.Product" Multiplicity="1" />
+          <End Role="Item" Type="Self.Item" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="Product_ID" />
+            </Principal>
+            <Dependent Role="Item">
+              <PropertyRef Name="Product_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Item_Store_Item">
+          <End Role="Item" Type="Self.Item" Multiplicity="1" />
+          <End Role="Item_Store" Type="Self.Item_Store" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Item">
+              <PropertyRef Name="Item_ID" />
+            </Principal>
+            <Dependent Role="Item_Store">
+              <PropertyRef Name="Item_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Item_Store_Store">
+          <End Role="Store" Type="Self.Store" Multiplicity="1" />
+          <End Role="Item_Store" Type="Self.Item_Store" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Store">
+              <PropertyRef Name="Store_ID" />
+            </Principal>
+            <Dependent Role="Item_Store">
+              <PropertyRef Name="Store_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Login_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Login" Type="Self.Login" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="User_ID" />
+            </Principal>
+            <Dependent Role="Login">
+              <PropertyRef Name="User_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Store_Warehouse_Store">
+          <End Role="Store" Type="Self.Store" Multiplicity="1" />
+          <End Role="Store_Warehouse" Type="Self.Store_Warehouse" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Store">
+              <PropertyRef Name="Store_ID" />
+            </Principal>
+            <Dependent Role="Store_Warehouse">
+              <PropertyRef Name="Store_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Store_Warehouse_Warehouse">
+          <End Role="Warehouse" Type="Self.Warehouse" Multiplicity="1" />
+          <End Role="Store_Warehouse" Type="Self.Store_Warehouse" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Warehouse">
+              <PropertyRef Name="Warehouse_ID" />
+            </Principal>
+            <Dependent Role="Store_Warehouse">
+              <PropertyRef Name="Warehouse_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_Type">
+          <End Role="Type" Type="Self.Type" Multiplicity="1" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Type">
+              <PropertyRef Name="Type_ID" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="Type_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище Lavka320ModelContainer">
+          <EntitySet Name="Item" EntityType="Self.Item" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Item_Store" EntityType="Self.Item_Store" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Login" EntityType="Self.Login" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Product" EntityType="Self.Product" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Store" EntityType="Self.Store" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Store_Warehouse" EntityType="Self.Store_Warehouse" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Type" EntityType="Self.Type" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Warehouse" EntityType="Self.Warehouse" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Item_Product" Association="Self.FK_Item_Product">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="Item" EntitySet="Item" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Item_Store_Item" Association="Self.FK_Item_Store_Item">
+            <End Role="Item" EntitySet="Item" />
+            <End Role="Item_Store" EntitySet="Item_Store" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Item_Store_Store" Association="Self.FK_Item_Store_Store">
+            <End Role="Store" EntitySet="Store" />
+            <End Role="Item_Store" EntitySet="Item_Store" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Login_User" Association="Self.FK_Login_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Login" EntitySet="Login" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Store_Warehouse_Store" Association="Self.FK_Store_Warehouse_Store">
+            <End Role="Store" EntitySet="Store" />
+            <End Role="Store_Warehouse" EntitySet="Store_Warehouse" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Store_Warehouse_Warehouse" Association="Self.FK_Store_Warehouse_Warehouse">
+            <End Role="Warehouse" EntitySet="Warehouse" />
+            <End Role="Store_Warehouse" EntitySet="Store_Warehouse" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_Type" Association="Self.FK_User_Type">
+            <End Role="Type" EntitySet="Type" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Lavka320Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Item">
+          <Key>
+            <PropertyRef Name="Item_ID" />
+          </Key>
+          <Property Name="Item_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Item_Description" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Product_ID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Product" Relationship="Self.FK_Item_Product" FromRole="Item" ToRole="Product" />
+          <NavigationProperty Name="Item_Store" Relationship="Self.FK_Item_Store_Item" FromRole="Item" ToRole="Item_Store" />
+        </EntityType>
+        <EntityType Name="Item_Store">
+          <Key>
+            <PropertyRef Name="Item_Store_ID" />
+          </Key>
+          <Property Name="Item_Store_ID" Type="Int32" Nullable="false" />
+          <Property Name="Item_ID" Type="Int32" Nullable="false" />
+          <Property Name="Store_ID" Type="Int32" Nullable="false" />
+          <Property Name="Count" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Item" Relationship="Self.FK_Item_Store_Item" FromRole="Item_Store" ToRole="Item" />
+          <NavigationProperty Name="Store" Relationship="Self.FK_Item_Store_Store" FromRole="Item_Store" ToRole="Store" />
+        </EntityType>
+        <EntityType Name="Login">
+          <Key>
+            <PropertyRef Name="Login_ID" />
+          </Key>
+          <Property Name="Login_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Login1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="User_ID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="User" Relationship="Self.FK_Login_User" FromRole="Login" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="Product_ID" />
+          </Key>
+          <Property Name="Product_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Product_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Product_PhotoPath" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Item" Relationship="Self.FK_Item_Product" FromRole="Product" ToRole="Item" />
+        </EntityType>
+        <EntityType Name="Store">
+          <Key>
+            <PropertyRef Name="Store_ID" />
+          </Key>
+          <Property Name="Store_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Store_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Item_Store" Relationship="Self.FK_Item_Store_Store" FromRole="Store" ToRole="Item_Store" />
+          <NavigationProperty Name="Store_Warehouse" Relationship="Self.FK_Store_Warehouse_Store" FromRole="Store" ToRole="Store_Warehouse" />
+        </EntityType>
+        <EntityType Name="Store_Warehouse">
+          <Key>
+            <PropertyRef Name="Store_Warehouse_ID" />
+          </Key>
+          <Property Name="Store_Warehouse_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Store_ID" Type="Int32" Nullable="false" />
+          <Property Name="Warehouse_ID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Store" Relationship="Self.FK_Store_Warehouse_Store" FromRole="Store_Warehouse" ToRole="Store" />
+          <NavigationProperty Name="Warehouse" Relationship="Self.FK_Store_Warehouse_Warehouse" FromRole="Store_Warehouse" ToRole="Warehouse" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="Type">
+          <Key>
+            <PropertyRef Name="Type_ID" />
+          </Key>
+          <Property Name="Type_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Type_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="User" Relationship="Self.FK_User_Type" FromRole="Type" ToRole="User" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="User_ID" />
+          </Key>
+          <Property Name="User_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="User_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Type_ID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Login" Relationship="Self.FK_Login_User" FromRole="User" ToRole="Login" />
+          <NavigationProperty Name="Type" Relationship="Self.FK_User_Type" FromRole="User" ToRole="Type" />
+        </EntityType>
+        <EntityType Name="Warehouse">
+          <Key>
+            <PropertyRef Name="Warehouse_ID" />
+          </Key>
+          <Property Name="Warehouse_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Warehouse_Address" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Warehouse_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Store_Warehouse" Relationship="Self.FK_Store_Warehouse_Warehouse" FromRole="Warehouse" ToRole="Store_Warehouse" />
+        </EntityType>
+        <Association Name="FK_Item_Product">
+          <End Role="Product" Type="Self.Product" Multiplicity="1" />
+          <End Role="Item" Type="Self.Item" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="Product_ID" />
+            </Principal>
+            <Dependent Role="Item">
+              <PropertyRef Name="Product_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Item_Store_Item">
+          <End Role="Item" Type="Self.Item" Multiplicity="1" />
+          <End Role="Item_Store" Type="Self.Item_Store" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Item">
+              <PropertyRef Name="Item_ID" />
+            </Principal>
+            <Dependent Role="Item_Store">
+              <PropertyRef Name="Item_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Item_Store_Store">
+          <End Role="Store" Type="Self.Store" Multiplicity="1" />
+          <End Role="Item_Store" Type="Self.Item_Store" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Store">
+              <PropertyRef Name="Store_ID" />
+            </Principal>
+            <Dependent Role="Item_Store">
+              <PropertyRef Name="Store_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Login_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Login" Type="Self.Login" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="User_ID" />
+            </Principal>
+            <Dependent Role="Login">
+              <PropertyRef Name="User_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Store_Warehouse_Store">
+          <End Role="Store" Type="Self.Store" Multiplicity="1" />
+          <End Role="Store_Warehouse" Type="Self.Store_Warehouse" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Store">
+              <PropertyRef Name="Store_ID" />
+            </Principal>
+            <Dependent Role="Store_Warehouse">
+              <PropertyRef Name="Store_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Store_Warehouse_Warehouse">
+          <End Role="Warehouse" Type="Self.Warehouse" Multiplicity="1" />
+          <End Role="Store_Warehouse" Type="Self.Store_Warehouse" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Warehouse">
+              <PropertyRef Name="Warehouse_ID" />
+            </Principal>
+            <Dependent Role="Store_Warehouse">
+              <PropertyRef Name="Warehouse_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_Type">
+          <End Role="Type" Type="Self.Type" Multiplicity="1" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Type">
+              <PropertyRef Name="Type_ID" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="Type_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Lavka320Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Item" EntityType="Self.Item" />
+          <EntitySet Name="Item_Store" EntityType="Self.Item_Store" />
+          <EntitySet Name="Login" EntityType="Self.Login" />
+          <EntitySet Name="Product" EntityType="Self.Product" />
+          <EntitySet Name="Store" EntityType="Self.Store" />
+          <EntitySet Name="Store_Warehouse" EntityType="Self.Store_Warehouse" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <EntitySet Name="Type" EntityType="Self.Type" />
+          <EntitySet Name="User" EntityType="Self.User" />
+          <EntitySet Name="Warehouse" EntityType="Self.Warehouse" />
+          <AssociationSet Name="FK_Item_Product" Association="Self.FK_Item_Product">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="Item" EntitySet="Item" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Item_Store_Item" Association="Self.FK_Item_Store_Item">
+            <End Role="Item" EntitySet="Item" />
+            <End Role="Item_Store" EntitySet="Item_Store" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Item_Store_Store" Association="Self.FK_Item_Store_Store">
+            <End Role="Store" EntitySet="Store" />
+            <End Role="Item_Store" EntitySet="Item_Store" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Login_User" Association="Self.FK_Login_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Login" EntitySet="Login" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Store_Warehouse_Store" Association="Self.FK_Store_Warehouse_Store">
+            <End Role="Store" EntitySet="Store" />
+            <End Role="Store_Warehouse" EntitySet="Store_Warehouse" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Store_Warehouse_Warehouse" Association="Self.FK_Store_Warehouse_Warehouse">
+            <End Role="Warehouse" EntitySet="Warehouse" />
+            <End Role="Store_Warehouse" EntitySet="Store_Warehouse" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_Type" Association="Self.FK_User_Type">
+            <End Role="Type" EntitySet="Type" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище Lavka320ModelContainer" CdmEntityContainer="Lavka320Entities">
+          <EntitySetMapping Name="Item">
+            <EntityTypeMapping TypeName="Lavka320Model.Item">
+              <MappingFragment StoreEntitySet="Item">
+                <ScalarProperty Name="Item_ID" ColumnName="Item_ID" />
+                <ScalarProperty Name="Item_Description" ColumnName="Item_Description" />
+                <ScalarProperty Name="Product_ID" ColumnName="Product_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Item_Store">
+            <EntityTypeMapping TypeName="Lavka320Model.Item_Store">
+              <MappingFragment StoreEntitySet="Item_Store">
+                <ScalarProperty Name="Item_Store_ID" ColumnName="Item_Store_ID" />
+                <ScalarProperty Name="Item_ID" ColumnName="Item_ID" />
+                <ScalarProperty Name="Store_ID" ColumnName="Store_ID" />
+                <ScalarProperty Name="Count" ColumnName="Count" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Login">
+            <EntityTypeMapping TypeName="Lavka320Model.Login">
+              <MappingFragment StoreEntitySet="Login">
+                <ScalarProperty Name="Login_ID" ColumnName="Login_ID" />
+                <ScalarProperty Name="Login1" ColumnName="Login" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="User_ID" ColumnName="User_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Product">
+            <EntityTypeMapping TypeName="Lavka320Model.Product">
+              <MappingFragment StoreEntitySet="Product">
+                <ScalarProperty Name="Product_ID" ColumnName="Product_ID" />
+                <ScalarProperty Name="Product_Name" ColumnName="Product_Name" />
+                <ScalarProperty Name="Product_PhotoPath" ColumnName="Product_PhotoPath" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Store">
+            <EntityTypeMapping TypeName="Lavka320Model.Store">
+              <MappingFragment StoreEntitySet="Store">
+                <ScalarProperty Name="Store_ID" ColumnName="Store_ID" />
+                <ScalarProperty Name="Store_Name" ColumnName="Store_Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Store_Warehouse">
+            <EntityTypeMapping TypeName="Lavka320Model.Store_Warehouse">
+              <MappingFragment StoreEntitySet="Store_Warehouse">
+                <ScalarProperty Name="Store_Warehouse_ID" ColumnName="Store_Warehouse_ID" />
+                <ScalarProperty Name="Store_ID" ColumnName="Store_ID" />
+                <ScalarProperty Name="Warehouse_ID" ColumnName="Warehouse_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="Lavka320Model.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Type">
+            <EntityTypeMapping TypeName="Lavka320Model.Type">
+              <MappingFragment StoreEntitySet="Type">
+                <ScalarProperty Name="Type_ID" ColumnName="Type_ID" />
+                <ScalarProperty Name="Type_Name" ColumnName="Type_Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="User">
+            <EntityTypeMapping TypeName="Lavka320Model.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="User_ID" ColumnName="User_ID" />
+                <ScalarProperty Name="User_Name" ColumnName="User_Name" />
+                <ScalarProperty Name="Type_ID" ColumnName="Type_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Warehouse">
+            <EntityTypeMapping TypeName="Lavka320Model.Warehouse">
+              <MappingFragment StoreEntitySet="Warehouse">
+                <ScalarProperty Name="Warehouse_ID" ColumnName="Warehouse_ID" />
+                <ScalarProperty Name="Warehouse_Address" ColumnName="Warehouse_Address" />
+                <ScalarProperty Name="Warehouse_Name" ColumnName="Warehouse_Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
